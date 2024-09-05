@@ -1,11 +1,13 @@
 from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from . import models
-from .database import engine, get_db
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
+
+from . import models
+from .database import engine, get_db
+from .password_generator import password_generator
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -13,7 +15,6 @@ app = FastAPI()
 class Credentials(BaseModel):
     password: str
     ip_address: str
-
 
 while True:
     try:
@@ -27,8 +28,15 @@ while True:
         print(f"The error was: {error}")
         time.sleep(2)
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to my Fastapi password generator!"}
 
 @app.get("/v1/password/")
-def generate_password(db: Session = Depends(get_db)):
-    rand_password = "password"
-    return rand_password
+async def get_password(db: Session = Depends(get_db)):
+    password = password_generator()
+    # new_password = models.Credentials(password=password, ip_address="192.158.1.38")
+    # db.add(new_password)
+    # db.commit()
+    # db.refresh(new_password)
+    return {"new password": password}
