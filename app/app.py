@@ -11,6 +11,7 @@ import time
 from . import models
 from .database import engine, get_db
 from .password_generator import password_generator
+from decouple import config
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -25,8 +26,10 @@ class Credentials(BaseModel):
 
 while True:
     try:
-        conn = psycopg2.connect(host='localhost', dbname='demo', user='postgres', \
-            password="password", cursor_factory=RealDictCursor)
+        conn = psycopg2.connect(host=config("POSTGRES_HOST"), dbname=config("POSTGRES_DB"), \
+                                user=config("POSTGRES_USER"), password=config("POSTGRES_PASSWORD"), \
+                                cursor_factory=RealDictCursor
+                                )
         cursor = conn.cursor()
         print("Database connection was successful.")
         break
