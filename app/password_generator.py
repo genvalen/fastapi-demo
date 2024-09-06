@@ -27,6 +27,6 @@ def password_generator(
     if syms:
         base_string += SYMBOLS
 
-    length = 15
+    password = "".join(random.sample(base_string, length))
 
-    return "".join(random.sample(base_string, length))
+    return password
