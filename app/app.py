@@ -39,11 +39,11 @@ while True:
 async def index(request: Request):
     return templates.TemplateResponse(request=request, name="index.html")
 
-@app.get("/v1/password/")
-async def get_password(db: Session = Depends(get_db)):
+@app.get("/v1/password/", response_class=HTMLResponse)
+async def get_password(request: Request, db: Session = Depends(get_db)):
     password = password_generator()
     # new_password = models.Credentials(password=password, ip_address="192.158.1.38")
     # db.add(new_password)
     # db.commit()
     # db.refresh(new_password)
-    return {"new password": password}
+    return templates.TemplateResponse(request=request, name="password.html", context={"password": password})
