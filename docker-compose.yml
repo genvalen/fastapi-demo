@@ -9,8 +9,8 @@ services:
             - postgres
         volumes:
             - ./:/usr/src/app:ro  #sync local files w/ container file in read only
-        # command:
-        #     - uvicorn app.app:app --host 0.0.0.0 --port 8000 --reload
+        command:
+            - uvicorn app.app:app --host 0.0.0.0 --port 8000 --reload
 
     postgres:
         image: postgres
