@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
-from .database import Base
+from app.database import Base
 
 class Credentials(Base):
     __tablename__ = "credentials"  # the name of the table in the database

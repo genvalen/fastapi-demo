@@ -8,9 +8,9 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
 
-from . import models
-from .database import engine, get_db
-from .password_generator import password_generator
+from app import models
+from app.database import engine, get_db
+from app.password_generator import password_generator
 from decouple import config
 
 models.Base.metadata.create_all(bind=engine)
