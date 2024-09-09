@@ -1,0 +1,18 @@
+services:
+    api:
+        image: valenciag/fastapi-demo
+        ports:
+            - 80:8000  #port 80: unencrypted web traffic
+        env_file:
+            - ./.env
+        depends_on:
+            - postgres
+
+    postgres:
+        image: postgres
+        env_file:
+            - ./.env
+        volumes:
+            - postgres_db:/var/lib/postgresql/data
+volumes:
+    postgres_db:
